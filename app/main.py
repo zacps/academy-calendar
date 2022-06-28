@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from flask import Flask
+from flask import Flask, Response
 from ics import Calendar, Event
 import requests
 import bs4
@@ -56,7 +56,7 @@ def calendar():
     releases = get_data()
     cal = build_calendar(releases)
     
-    return str(cal)
+    return Response(str(cal), mimetype='text/calendar')
 
 
 if __name__ == "__main__":
