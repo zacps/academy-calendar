@@ -1,0 +1,5 @@
+requests==
+bs4==
+js2py==
+ics==
+pytz==
