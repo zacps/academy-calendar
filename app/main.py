@@ -1,3 +1,4 @@
+import html
 from datetime import datetime, timedelta
 
 from flask import Flask, Response
@@ -42,7 +43,7 @@ def build_calendar(parsed_releases):
                     begin=start_time,
                     end=f"{start_time + duration}",
                     location=f"Academy Cinemas",
-                    url=time['bookingLink'],
+                    url=html.unescape(time['bookingLink']),
                     categories=[f"FILM"],
                     description=time['bookingLink']
                 )
