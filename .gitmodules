@@ -1,6 +1,3 @@
-[submodule "rottentomatoes-python"]
-	path = rottentomatoes-python
-	url = git@github.com:preritdas/rottentomatoes-python.git
 [submodule "rottentomatoes"]
 	path = rottentomatoes
 	url = git@github.com:preritdas/rottentomatoes-python.git
