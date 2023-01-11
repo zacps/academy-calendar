@@ -8,4 +8,6 @@ RUN pip install -r /app/requirements.txt
 
 COPY ./app /app
 
+RUN chmod +x /app/startup.sh
+
 CMD ["/bin/bash", "-c", "/app/startup.sh"]
