@@ -3,3 +3,5 @@ beautifulsoup4==4.11.1
 js2py==0.71
 ics==0.7
 pytz>=2022.1
+Flask-APScheduler==1.12.4
+gunicorn==20.1.0

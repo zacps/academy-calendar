@@ -1,12 +1,11 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.8-alpine
+FROM python:3.9
 
-ENV STATIC_URL /static
-ENV STATIC_PATH /var/www/app/static
+WORKDIR /app
 
-COPY ./requirements.txt /var/www/requirements.txt
+COPY ./requirements.txt /app/requirements.txt
 
-RUN apk add build-base
-
-RUN pip install -r /var/www/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 COPY ./app /app
+
+CMD ["/bin/bash", "-c", "/app/startup.sh"]
