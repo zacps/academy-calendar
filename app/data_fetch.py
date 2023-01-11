@@ -1,9 +1,11 @@
 import time
 import html
 import logging
+from functools import lru_cache
 from datetime import datetime, timedelta
 
 from ics import Calendar, Event
+from rottentomatoes import rottentomatoes as rt
 import requests
 import bs4
 import js2py
@@ -34,12 +36,26 @@ def get_data():
     return parsed_releases
 
 
+@lru_cache
+def rotten_tomatoes_details(name: str) -> str:
+    try:
+        return str(rt.Film(name))
+    except Exception as e:
+        print(e)
+        return "Failed to fetch details from rotten tomatoes"
+
+
 def build_calendar(parsed_releases):
     cal = Calendar()
     timezone = pytz.timezone('Pacific/Auckland')
     
     for date, films in parsed_releases.items():
         for film in films:
+            try:
+                details = rotten_tomatoes_details(film['title'])
+            except Exception:
+                details = 'Failed to fetch details from rotten tomatoes.'
+
             for time in film['times']:
                 start_time = datetime.strptime(f"{date} {time['time']}", "%Y-%m-%d %H:%M%p")
                 start_time.replace(tzinfo=timezone)
@@ -51,7 +67,7 @@ def build_calendar(parsed_releases):
                     location=f"Academy Cinemas",
                     url=html.unescape(time['bookingLink']),
                     categories=[f"FILM"],
-                    description=time['bookingLink']
+                    description=f"{details}\n\n{html.unescape(time['bookingLink'])}"
                 )
                 cal.events.add(event)
 

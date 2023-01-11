@@ -1,7 +1,5 @@
 from flask import Flask, Response
 
-from rottentomatoes import rottentomatoes as rt
-
 
 app = Flask(__name__)
 
